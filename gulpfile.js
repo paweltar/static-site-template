@@ -6,6 +6,7 @@ var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
+var del = require('del');
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
@@ -39,6 +40,10 @@ gulp.task('panini', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('clean:dist', function() {
+  return del.sync('dist');
+})
+
 gulp.task('watch', function() {
   gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
   gulp.watch("./src/assets/scss/**/*.scss", ['sass']);
@@ -46,5 +51,5 @@ gulp.task('watch', function() {
 })
 
 gulp.task('default', function(cb) {
-  runSequence(['panini', 'sass'], 'serve', 'watch', cb);
+  runSequence(['clean:dist'],['panini', 'sass'], 'serve', 'watch', cb);
 });
