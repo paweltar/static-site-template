@@ -5,6 +5,7 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
@@ -15,10 +16,15 @@ gulp.task('serve', ['sass'], function() {
 gulp.task('sass', function () {
   return gulp.src('./src/assets/scss/**/*.scss')
     .pipe(sourcemaps.init())
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions']
+    }))
     .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist/css'))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 });
 
 gulp.task('panini', function() {

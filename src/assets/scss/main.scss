@@ -1,3 +1,8 @@
 body {
-  background: transparentize(green, .5);
+  background: transparentize(orange, .5);
+}
+
+.test-autoprefixer {
+  display: flex;
+  background: linear-gradient(#e98a00, #f5aa2f);
 }
