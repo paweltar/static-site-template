@@ -1,0 +1,20 @@
+{
+  "name": "a-static",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "paweltar <paweltar@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.0"
+  }
+}

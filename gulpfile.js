@@ -7,11 +7,22 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var del = require('del');
+var bundle = require('gulp-bundle-assets');
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
         server: "dist"
     });
+});
+
+gulp.task('bundle', function() {
+  return gulp.src('./bundle.config.js')
+    .pipe(bundle())
+    .pipe(bundle.results({
+        fileName: 'manifest',
+        dest: './src/data'
+      }))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('sass', function () {
@@ -41,15 +52,19 @@ gulp.task('panini', function() {
 });
 
 gulp.task('clean:dist', function() {
-  return del.sync('dist');
+  return del.sync('dist', 'src/data/manifest.json');
+});
+
+gulp.task('clean:data', function() {
+  return del.sync('src/data/manifest.json');
 })
 
 gulp.task('watch', function() {
   gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
   gulp.watch("./src/assets/scss/**/*.scss", ['sass']);
   gulp.watch("dist/**/*").on('change', browserSync.reload);
-})
-
+});
+gulp.watch('.src/assets/js/**/*.js', browserSync.reload);
 gulp.task('default', function(cb) {
-  runSequence(['clean:dist'],['panini', 'sass'], 'serve', 'watch', cb);
+  runSequence(['clean:dist', 'clean:data'],['panini', 'sass', 'bundle'], 'serve', 'watch', cb);
 });
