@@ -6,18 +6,19 @@ var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('serve', function() {
+gulp.task('serve', ['sass'], function() {
     browserSync.init({
-        server: "./dist"
+        server: "dist"
     });
 });
 
 gulp.task('sass', function () {
-  return gulp.src('src/assets/sass/*.scss')
+  return gulp.src('./src/assets/scss/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist/css'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('panini', function() {
@@ -34,9 +35,10 @@ gulp.task('panini', function() {
 
 gulp.task('watch', function() {
   gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
+  gulp.watch("./src/assets/scss/**/*.scss", ['sass']);
   gulp.watch("dist/**/*").on('change', browserSync.reload);
 })
 
 gulp.task('default', function(cb) {
-  runSequence(['panini'], 'serve', 'watch', cb);
+  runSequence(['panini', 'sass'], 'serve', 'watch', cb);
 });
