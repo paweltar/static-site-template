@@ -52,7 +52,7 @@ gulp.task('panini', function() {
 });
 
 gulp.task('clean:dist', function() {
-  return del.sync('dist', 'src/data/manifest.json');
+  return del.sync('dist');
 });
 
 gulp.task('clean:data', function() {
@@ -62,9 +62,10 @@ gulp.task('clean:data', function() {
 gulp.task('watch', function() {
   gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
   gulp.watch("./src/assets/scss/**/*.scss", ['sass']);
-  gulp.watch("dist/**/*").on('change', browserSync.reload);
+  gulp.watch("dist/**/*.html").on('change', browserSync.reload);
+  gulp.watch('./src/assets/js/**/*.js', ['bundle'], browserSync.reload);
 });
-gulp.watch('.src/assets/js/**/*.js', browserSync.reload);
+
 gulp.task('default', function(cb) {
-  runSequence(['clean:dist', 'clean:data'],['panini', 'sass', 'bundle'], 'serve', 'watch', cb);
+  runSequence(['clean:dist', 'clean:data'], 'bundle', ['panini', 'sass'], 'serve', 'watch', cb);
 });
