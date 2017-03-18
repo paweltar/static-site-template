@@ -1,1 +1,0 @@
-{"version":3,"sources":["src/assets/js/app.js"],"names":["$","document","ready","console","log"],"mappings":"AAAAA,EAAEC,UAAUC,MAAM,WAChBC,QAAQC,IAAI","file":"main-eeb74c97b8.js","sourcesContent":["$(document).ready(function() {\n  console.log('hello');\n});\n"],"sourceRoot":"/source/"}

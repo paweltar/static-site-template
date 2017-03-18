@@ -59,11 +59,15 @@ gulp.task('clean:data', function() {
   return del.sync('src/data/manifest.json');
 })
 
+gulp.task('clean:js', function() {
+  return del.sync('dist/*.js');
+})
+
 gulp.task('watch', function() {
   gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
   gulp.watch("./src/assets/scss/**/*.scss", ['sass']);
   gulp.watch("dist/**/*.html").on('change', browserSync.reload);
-  gulp.watch('./src/assets/js/**/*.js', ['bundle'], browserSync.reload);
+  gulp.watch('./src/assets/js/**/*.js', function() {runSequence('clean:js','bundle')});
 });
 
 gulp.task('default', function(cb) {
