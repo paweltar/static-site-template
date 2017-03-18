@@ -3,11 +3,18 @@ const chalk = require('chalk');
 var panini = require('panini');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync').create();
+var sass = require('gulp-sass');
 
 gulp.task('serve', function() {
     browserSync.init({
         server: "./dist"
     });
+});
+
+gulp.task('sass', function () {
+  return gulp.src('src/assets/sass/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('panini', function() {
