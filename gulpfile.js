@@ -1,8 +1,16 @@
 var gulp = require('gulp');
 const chalk = require('chalk');
 var panini = require('panini');
+var runSequence = require('run-sequence');
+var browserSync = require('browser-sync').create();
 
-gulp.task('default', function() {
+gulp.task('serve', function() {
+    browserSync.init({
+        server: "./dist"
+    });
+});
+
+gulp.task('panini', function() {
   gulp.src('src/pages/**/*.html')
     .pipe(panini({
       root: 'src/pages/',
@@ -12,4 +20,13 @@ gulp.task('default', function() {
       data: 'src/data/'
     }))
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch(['./src/{pages,layouts,partials,helpers,data}/**/*'], ['panini', panini.refresh]);
+  gulp.watch("dist/**/*").on('change', browserSync.reload);
+})
+
+gulp.task('default', function(cb) {
+  runSequence(['panini'], 'serve', 'watch', cb);
 });
