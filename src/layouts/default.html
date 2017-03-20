@@ -1,18 +1,24 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>a-static starter template</title>
     <link rel="stylesheet" href="css/main.css" />
-  </head>
-  <body>
-    <p>layout</p>
-    <hr>
-    {{> body}}
+</head>
 
-    {{{manifest.vendor.scripts}}}
-    {{{manifest.main.scripts}}}
-  </body>
+<body>
+    {{> top-navigation}}
+
+    <div class="uk-child-width-expand@s" uk-grid>
+        <div>
+            {{> body}}
+        </div>
+    </div>
+
+    {{{manifest.vendor.scripts}}} {{{manifest.main.scripts}}}
+</body>
+
 </html>

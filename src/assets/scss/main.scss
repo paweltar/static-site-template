@@ -1,9 +1,5 @@
-body {
-  background: transparentize(green, .5);
-  width: percentage(5/10);
-}
+@import 'vendor/uikit';
 
-.test-autoprefixer {
-  display: flex;
-  background: linear-gradient(#e98a00, #f5aa2f);
-}
+@import 'global';
+@import 'typography';
+@import 'variables';

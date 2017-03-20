@@ -6,7 +6,11 @@ module.exports = {
       ]
     },
     vendor: {
-      scripts: './bower_components/jquery/dist/jquery.js'
+      scripts: [
+          './bower_components/jquery/dist/jquery.js',
+          './bower_components/uikit/dist/js/uikit.js',
+          './bower_components/uikit/dist/js/uikit-icons.js'
+      ]
     }
   }
 };
