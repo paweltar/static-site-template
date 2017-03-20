@@ -90,3 +90,7 @@ gulp.task('watch', function() {
 gulp.task('default', function(cb) {
   runSequence(['clean:dist', 'clean:data'], 'bundle', ['panini', 'sass', 'images', 'fonts'], 'serve', 'watch', cb);
 });
+
+gulp.task('build', function(cb) {
+  runSequence(['clean:dist', 'clean:data'], 'bundle', ['panini', 'sass', 'images', 'fonts'], cb);
+});
